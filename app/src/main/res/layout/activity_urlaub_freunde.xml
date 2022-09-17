@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/urlaub_freunde_layout"
+    tools:context=".Urlaub_Freunde">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/lightOrange">
+
+        <include
+            android:id="@+id/include2"
+            layout="@layout/main_toolbar" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:text="Urlaub-Freunde"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/neuerUrlaub1"
+            app:layout_constraintTop_toBottomOf="@+id/include2"
+            tools:layout_editor_absoluteX="-16dp" />
+
+        <Button
+            android:id="@+id/neuerUrlaub1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/black"
+            android:text="Neuer Urlaub"
+            android:textColor="@color/lightOrange"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+   <RelativeLayout
+       android:layout_width="300dp"
+       android:layout_height="match_parent"
+       android:layout_gravity="start"
+       android:background="@android:color/holo_orange_light">
+
+       <include
+           layout="@layout/main_nav_drawer"/>
+
+   </RelativeLayout>
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

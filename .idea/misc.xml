@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Studium/AOP/MyUrlaub5/app/src/main/res/drawable/ic_calender.xml" value="0.1605" />
+        <entry key="..\:/Studium/AOP/MyUrlaub5/app/src/main/res/drawable/ic_menu.xml" value="0.1605" />
+        <entry key="..\:/Studium/AOP/MyUrlaub5/app/src/main/res/layout/activity_kalender.xml" value="0.21965579710144928" />
+        <entry key="..\:/Studium/AOP/MyUrlaub5/app/src/main/res/layout/activity_main.xml" value="0.21965579710144928" />
+        <entry key="..\:/Studium/AOP/MyUrlaub5/app/src/main/res/layout/activity_neuer_urlaub.xml" value="0.21965579710144928" />
+        <entry key="..\:/Studium/AOP/MyUrlaub5/app/src/main/res/layout/activity_urlaub_freunde.xml" value="0.21965579710144928" />
+        <entry key="..\:/Studium/AOP/MyUrlaub5/app/src/main/res/layout/main_nav_drawer.xml" value="0.21965579710144928" />
+        <entry key="..\:/Studium/AOP/MyUrlaub5/app/src/main/res/layout/main_toolbar.xml" value="0.21965579710144928" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
