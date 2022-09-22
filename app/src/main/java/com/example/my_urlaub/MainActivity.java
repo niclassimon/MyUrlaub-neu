@@ -4,6 +4,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -12,10 +14,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     Button neuerUrlaub;
+    ArrayList<UrlaubModel> UrlaubModelList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,22 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawer_layout);
         addVocation();
+
+        RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
+        setUpUrlaubModels();
+        Urlaub_recycler_View_Adapter adapter = new Urlaub_recycler_View_Adapter(this, UrlaubModelList);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void setUpUrlaubModels(){
+        String [] urlaubDescription = getResources().getStringArray(R.array.description);
+        String [] urlaubLocation = getResources().getStringArray(R.array.location);
+        String [] urlaubDate = getResources().getStringArray(R.array.startDate);
+
+        for (int i = 0; i < urlaubDescription.length; i++) {
+            UrlaubModelList.add(new UrlaubModel(urlaubLocation[i],urlaubDescription[i],urlaubDate[i]));
+        }
     }
 
     private void addVocation() {

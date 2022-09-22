@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">My-Urlaub</string>
+
+    <string-array name="location">
+        <item>Deutschland</item>
+        <item>Spanien</item>
+        <item> Frankreich</item>
+        <item>Australien</item>
+    </string-array>
+
+    <string-array name="startDate">
+        <item>13.05.2020</item>
+        <item>04.10.2022</item>
+        <item>10.02.2019</item>
+        <item>23.11.2021</item>
+    </string-array>
+
+    <string-array name="endDate">
+        <item>13.05.2020</item>
+        <item>04.10.2022</item>
+        <item>20.02.2019</item>
+        <item>23.11.2021</item>
+    </string-array>
+
+    <string-array name="description">
+        <item>Es war kalt.</item>
+        <item>Es war toll!</item>
+        <item>Es war sher warm!</item>
+        <item>Flug hatte Verspätung</item>
+    </string-array>
 </resources>
