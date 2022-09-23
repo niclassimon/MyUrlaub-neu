@@ -1,5 +1,6 @@
 package com.example.my_urlaub;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -11,12 +12,15 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements Recycler_view_Interface{
+public class MainActivity extends AppCompatActivity implements Recycler_view_Interface, DrawerLayout.DrawerListener, NavigationView.OnNavigationItemSelectedListener{
 
     DrawerLayout drawerLayout;
     Button neuerUrlaub;
@@ -136,5 +140,30 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
         Intent intent = new Intent(MainActivity.this, OnClickUrlaub.class );
         //intent.putExtra(, );
         startActivity(intent);
+    }
+
+    @Override
+    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(@NonNull View drawerView) {
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onDrawerClosed(@NonNull View drawerView) {
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 }
