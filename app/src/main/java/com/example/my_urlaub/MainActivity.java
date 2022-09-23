@@ -16,7 +16,7 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Recycler_view_Interface{
 
     DrawerLayout drawerLayout;
     Button neuerUrlaub;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
         setUpUrlaubModels();
-        Urlaub_recycler_View_Adapter adapter = new Urlaub_recycler_View_Adapter(this, UrlaubModelList);
+        Urlaub_recycler_View_Adapter adapter = new Urlaub_recycler_View_Adapter(this, UrlaubModelList, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -129,5 +129,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         closeDrawer(drawerLayout);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(MainActivity.this, OnClickUrlaub.class );
+        //intent.putExtra(, );
+        startActivity(intent);
     }
 }
