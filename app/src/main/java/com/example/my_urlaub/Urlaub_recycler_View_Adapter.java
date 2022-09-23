@@ -17,9 +17,9 @@ public class Urlaub_recycler_View_Adapter extends RecyclerView.Adapter<Urlaub_re
 
 
     Context context;
-    ArrayList<UrlaubModel> urlaubModels;
+    ArrayList<Urlaub> urlaubModels;
 
-    public Urlaub_recycler_View_Adapter(Context context, ArrayList<UrlaubModel> urlaubModels, Recycler_view_Interface recycler_view_interface){
+    public Urlaub_recycler_View_Adapter(Context context, ArrayList<Urlaub> urlaubModels, Recycler_view_Interface recycler_view_interface){
         this.context = context;
         this.urlaubModels = urlaubModels;
         this.recycler_view_interface = recycler_view_interface;
