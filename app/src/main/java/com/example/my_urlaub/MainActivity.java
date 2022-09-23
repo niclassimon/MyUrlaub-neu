@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
 
     DrawerLayout drawerLayout;
     Button neuerUrlaub;
-    ArrayList<UrlaubModel> UrlaubModelList = new ArrayList<>();
+    ArrayList<Urlaub> UrlaubModelList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +44,11 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
     private void setUpUrlaubModels(){
         String [] urlaubDescription = getResources().getStringArray(R.array.description);
         String [] urlaubLocation = getResources().getStringArray(R.array.location);
-        String [] urlaubDate = getResources().getStringArray(R.array.startDate);
+        String [] urlaubStartDate = getResources().getStringArray(R.array.startDate);
+        String [] urlaubEndDate = getResources().getStringArray(R.array.endDate);
 
         for (int i = 0; i < urlaubDescription.length; i++) {
-            UrlaubModelList.add(new UrlaubModel(urlaubLocation[i],urlaubDescription[i],urlaubDate[i]));
+            UrlaubModelList.add(new Urlaub(urlaubLocation[i], urlaubDescription[i], urlaubStartDate[i], urlaubEndDate[i]));
         }
     }
 

@@ -7,8 +7,8 @@ import androidx.room.TypeConverters;
 import com.example.my_urlaub.Urlaub;
 
 @Database(entities = {Urlaub.class}, version = 1)
-@TypeConverters({UrlaubAttributesConverter.class})
+@TypeConverters({com.example.my_urlaub.room.UrlaubAttributesConverter.class})
 
 public abstract class UrlaubDatabase extends RoomDatabase{
-    public abstract UrlaubDAO urlaubDAO();
+    public abstract com.example.my_urlaub.room.UrlaubDAO urlaubDAO();
 }
