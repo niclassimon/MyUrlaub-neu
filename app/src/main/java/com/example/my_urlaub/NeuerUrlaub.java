@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -124,13 +125,7 @@ public class NeuerUrlaub extends AppCompatActivity {
 
             }
         };
-
-
-
     }
-
-
-
 
 
     public void ShowImage() {
@@ -194,9 +189,16 @@ public class NeuerUrlaub extends AppCompatActivity {
                     System.out.println(monthSt);
                     Toast.makeText(NeuerUrlaub.this, "Das Enddatum darf nicht vor dem Startdatum sein", Toast.LENGTH_SHORT).show();
                 }
-
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("startDate",getStartDate());
+                intent.putExtra("endDate", getEndDate());
+                intent.putExtra("location", getLocation());
+                intent.putExtra("description", getDescription());
+                Log.d("hallo", getLocation());
+                startActivity(intent);
             }
         });
+
     }
 
     public void checkIfEverythingIsFilled(){
@@ -250,6 +252,31 @@ public class NeuerUrlaub extends AppCompatActivity {
                 DescriptionUrlaub.setText(DescriptionNewUrlaub.getText());
             }
         });
+    }
+
+    public String getStartDate(){
+        String startDate = mDisplayDateStart.getText().toString();
+     return startDate;
+    }
+
+    public String getEndDate(){
+        String endDate = mDisplayDateEnd.getText().toString();
+        return endDate;
+    }
+
+    public String getLocation(){
+        String location = OrtEingabe.getText().toString();
+        return location;
+    }
+
+    public String getDescription(){
+        String description = DescriptionNewUrlaub.getText().toString();
+        return description;
+    }
+
+    public Urlaub newUrlaub(){
+        Urlaub urlaub = new Urlaub(getLocation(),getStartDate(), getEndDate(), getDescription());
+        return urlaub;
     }
 
 

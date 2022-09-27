@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,32 +25,44 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
 
     DrawerLayout drawerLayout;
     Button neuerUrlaub;
-    ArrayList<Urlaub> UrlaubModelList = new ArrayList<>();
+    ArrayList<Urlaub> UrlaubModelList = new ArrayList<Urlaub>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         drawerLayout = findViewById(R.id.drawer_layout);
-        addVocation();
 
-        RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
+
         setUpUrlaubModels();
+        recyclerView();
+    }
+
+    public void recyclerView(){
+        RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
+
+        recyclerView.setHasFixedSize(false);
         Urlaub_recycler_View_Adapter adapter = new Urlaub_recycler_View_Adapter(this, UrlaubModelList, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter.notifyDataSetChanged();
     }
 
     private void setUpUrlaubModels(){
-        String [] urlaubDescription = getResources().getStringArray(R.array.description);
-        String [] urlaubLocation = getResources().getStringArray(R.array.location);
-        String [] urlaubStartDate = getResources().getStringArray(R.array.startDate);
-        String [] urlaubEndDate = getResources().getStringArray(R.array.endDate);
+        addVocation();
 
-        for (int i = 0; i < urlaubDescription.length; i++) {
-            UrlaubModelList.add(new Urlaub(urlaubLocation[i], urlaubDescription[i], urlaubStartDate[i], urlaubEndDate[i]));
-        }
+        Intent intent = getIntent();
+        String startDate = intent.getStringExtra("startDate");
+        String endDate = intent.getStringExtra("endDate");
+        String location = intent.getStringExtra("location");
+        String description = intent.getStringExtra("description");
+
+        UrlaubModelList.add(new Urlaub(location,startDate,endDate,description));
+
+
+        //for (int i = 0; i < urlaubDescription.length; i++) {
+        //    UrlaubModelList.add(new Urlaub(urlaubLocation[i], urlaubDescription[i], urlaubStartDate[i], urlaubEndDate[i]));
+        //}
     }
 
     private void addVocation() {
