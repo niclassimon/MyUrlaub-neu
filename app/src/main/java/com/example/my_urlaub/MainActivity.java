@@ -31,11 +31,13 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ArrayList<Urlaub> UrlaubModelList = new ArrayList<Urlaub>();
+
         drawerLayout = findViewById(R.id.drawer_layout);
-
-
+        addVocation();
         setUpUrlaubModels();
         recyclerView();
+
     }
 
     public void recyclerView(){
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
         String description = intent.getStringExtra("description");
 
         UrlaubModelList.add(new Urlaub(location,startDate,endDate,description));
-
+        UrlaubModelList.add(new Urlaub("USA", "12.04.67", "13.05.67", "war cool!"));
 
         //for (int i = 0; i < urlaubDescription.length; i++) {
         //    UrlaubModelList.add(new Urlaub(urlaubLocation[i], urlaubDescription[i], urlaubStartDate[i], urlaubEndDate[i]));
