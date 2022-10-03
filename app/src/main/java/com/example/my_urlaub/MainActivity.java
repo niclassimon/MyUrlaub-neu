@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.my_urlaub.room.UrlaubDatabaseHelper;
+import com.example.my_urlaub.UrlaubDatabaseHelper;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
