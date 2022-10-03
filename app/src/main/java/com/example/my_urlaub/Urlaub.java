@@ -22,9 +22,11 @@ public class Urlaub {
     public String dateEnd;
     @ColumnInfo(name = "description")
     public String description;
+    @ColumnInfo(name = "imgSource")
+    public String imgSource;
 
     @Ignore
-    public Urlaub(String location, String dateStart, String dateEnd, String description){
+    public Urlaub(String location, String dateStart, String dateEnd, String description, String imgSource){
         this.id = UUID.randomUUID();
         if (location != null){
             this.location = location;}
@@ -38,9 +40,12 @@ public class Urlaub {
         if (description != null){
             this.description = description;}
         else {this.description = "";}
+        if (imgSource != null){
+            this.imgSource = imgSource;}
+        else {this.imgSource = "";}
     }
 
-    public Urlaub(UUID id, String location, String dateStart, String dateEnd, String description){
+    public Urlaub(@NonNull UUID id, String location, String dateStart, String dateEnd, String description, String imgSource){
         this.id = id;
         if (location != null){
             this.location = location;}
@@ -54,15 +59,16 @@ public class Urlaub {
         if (description != null){
             this.description = description;}
         else {this.description = "";}
+        if (imgSource != null){
+            this.imgSource = imgSource;}
+        else {this.imgSource = "";}
     }
+
 
     public String getLocation() {
         return location;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
     public String getStartDate() {
         return dateStart;
@@ -71,5 +77,12 @@ public class Urlaub {
     public String getEndDate() {
         return dateEnd;
     }
-}
 
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImgSource() {
+        return imgSource;
+    }
+}
