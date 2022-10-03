@@ -1,8 +1,13 @@
 package com.example.my_urlaub;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,25 +30,40 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements Recycler_view_Interface, DrawerLayout.DrawerListener, NavigationView.OnNavigationItemSelectedListener{
 
     DrawerLayout drawerLayout;
+    ActivityResultLauncher<Intent> activityResultLauncher;
     Button neuerUrlaub;
     ArrayList<Urlaub> UrlaubModelList = new ArrayList<Urlaub>();
     private UrlaubDatabaseHelper db;
+    CardView cardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ArrayList<Urlaub> UrlaubModelList = new ArrayList<Urlaub>();
-
         drawerLayout = findViewById(R.id.drawer_layout);
+
         addVocation();
-        setUpUrlaubModels();
-        recyclerView();
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                addVocation();
+                Intent i = result.getData();
+                String startDate = i.getStringExtra("startDate");
+                String endDate = i.getStringExtra("endDate");
+                String location = i.getStringExtra("location");
+                String description = i.getStringExtra("description");
+                String imgSrc = i.getStringExtra("imgSrc");
+                //Toast.makeText(MainActivity.this,i.getStringExtra("location"),Toast.LENGTH_LONG).show();
+                Urlaub urlaub = new Urlaub(location,startDate,endDate,description,imgSrc);
+                UrlaubModelList.add(urlaub);
+
+                recyclerView();
+            }
+        });
     }
 
     public void recyclerView(){
         RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
-
         recyclerView.setHasFixedSize(false);
         Urlaub_recycler_View_Adapter adapter = new Urlaub_recycler_View_Adapter(this, UrlaubModelList, this);
         recyclerView.setAdapter(adapter);
@@ -65,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
         UrlaubModelList.add(new Urlaub("USA", "12.04.67", "13.05.67", "war cool!", ""));
         UrlaubModelList.add(urlaub);
 
-        loadUrlaubList(urlaub);
+        //loadUrlaubList(urlaub);
         //for (int i = 0; i < urlaubDescription.length; i++) {
         //    UrlaubModelList.add(new Urlaub(urlaubLocation[i], urlaubDescription[i], urlaubStartDate[i], urlaubEndDate[i]));
         //}
@@ -77,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, NeuerUrlaub.class);
-                startActivity(intent);
+                activityResultLauncher.launch(intent);
             }
         });
     }
@@ -91,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
 
     public void ClickNewVocation(View view){
         redirectActivity(this, NeuerUrlaub.class);
+
     }
 
     public static void openDrawer(DrawerLayout drawerLayout) {
@@ -118,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
     }
 
     public void ClickCalender(View view){
-        redirectActivity(this, Kalender.class);
+        redirectActivity(MainActivity.this, Kalender.class);
     }
 
     public void ClickLogout(View view){
@@ -151,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
     public static void redirectActivity(Activity activity, Class aClass) {
         Intent intent = new Intent(activity, aClass);
         //Set flag
-        intent.setFlags((Intent.FLAG_ACTIVITY_NEW_TASK));
+        //intent.setFlags((Intent.FLAG_ACTIVITY_NEW_TASK));
         //Start activity
         activity.startActivity(intent);
     }
@@ -165,12 +186,15 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
     @Override
     public void onItemClick(int position) {
         Intent intent = getIntent();
-        String startDate = intent.getStringExtra("startDate");
-        String endDate = intent.getStringExtra("endDate");
-        String location = intent.getStringExtra("location");
-        String description = intent.getStringExtra("description");
+
+        //String endDate = intent.getStringExtra("endDate");
 
         Intent intent1 = new Intent(MainActivity.this, OnClickUrlaub.class );
+        Urlaub urlaub = UrlaubModelList.get(position);
+        String description = urlaub.getDescription();
+        String location = urlaub.getLocation();
+        String startDate = urlaub.getStartDate();
+        String endDate = urlaub.getEndDate();
         intent1.putExtra("startDate",startDate);
         intent1.putExtra("endDate", endDate);
         intent1.putExtra("location", location);
