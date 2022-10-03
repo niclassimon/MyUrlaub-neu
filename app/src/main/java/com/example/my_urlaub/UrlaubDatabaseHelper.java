@@ -1,12 +1,8 @@
-package com.example.my_urlaub.room;
+package com.example.my_urlaub;
 
 import android.content.Context;
-
-import androidx.room.Database;
 import androidx.room.Room;
-import com.example.my_urlaub.Urlaub;
 import java.util.ArrayList;
-import com.example.my_urlaub.room.UrlaubDatabase;
 
 public class UrlaubDatabaseHelper {
 
@@ -38,4 +34,3 @@ public class UrlaubDatabaseHelper {
     }
 
 }
-
