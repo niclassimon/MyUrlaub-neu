@@ -102,9 +102,26 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
         SaveAndCheckUrlaub();
         clickTextView();
         SpinnerNewUrlaubColor();
-
-
-
+        setUpNotifications();
+    }
+    
+    private void setUpNotifications() {
+        createNotificationChannel();
+    //    notBuilder.setSmallIcon();
+        notBuilder.setContentTitle(getString(R.string.notif_title));
+        notBuilder.setContentText(getString(R.string.notif_text));
+    }
+    
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     public void DateStartAndEnd() {
@@ -120,9 +137,6 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
                         android.R.style.Theme_Material_Dialog,mDateSetListenerStart,yearStart,monthStart,dayStart);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
                 dialog.show();
-
-
-
             }
         });
 
@@ -170,14 +184,7 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
 
             }
         };
-
-
-
     }
-
-
-
-
 
     public void ShowImage() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -224,8 +231,6 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
                     imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
                 }
         }
-
-
     }
 
 
@@ -244,7 +249,7 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
                 intent.putExtra("endDate", getEndDate());
                 intent.putExtra("location", getLocation());
                 intent.putExtra("description", getDescription());
-                Log.d("hallo", getLocation());
+                intent.putExtra("imgSrc", getImgSrc());
                 startActivity(intent);
                 if(UnixDateStart > UnixDateEnd) {
                     Toast.makeText(NeuerUrlaub.this, "Das Enddatum darf nicht vor dem Startdatum sein !", Toast.LENGTH_SHORT).show();
@@ -259,15 +264,6 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
                 }else{
 
                 }
-
-
-
-
-
-
-
-
-
             }
         });
     }
@@ -348,8 +344,6 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
         UnixDateEndMonth = (monthEd -1)  * 30 ;
         UnixDateEndDay = dayEd - 1;
         UnixDateEnd = UnixDateEndYear + UnixDateEndMonth + UnixDateEndDay;
-
-
     }
 
 
@@ -395,7 +389,6 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
     }
 
 
-
     public String getStartDate(){
         String startDate = mDisplayDateStart.getText().toString();
         return startDate;
@@ -415,10 +408,14 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
         String description = DescriptionNewUrlaub.getText().toString();
         return description;
     }
+    
+    public String getImgSource(){
+        String imgSource = imageView.toString();
+        return imgSource;
+    }
 
     public Urlaub newUrlaub(){
-        Urlaub urlaub = new Urlaub(getLocation(),getStartDate(), getEndDate(), getDescription());
-        return urlaub;
+        return new Urlaub(getLocation(),getStartDate(), getEndDate(), getDescription(), getImgSource());
     }
 }
 
