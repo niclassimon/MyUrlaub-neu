@@ -59,9 +59,10 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
         String endDate = intent.getStringExtra("endDate");
         String location = intent.getStringExtra("location");
         String description = intent.getStringExtra("description");
+        String imgSrc = intent.getStringExtra("imgSrc");
 
-        Urlaub urlaub = new Urlaub(location,startDate,endDate,description);
-        UrlaubModelList.add(new Urlaub("USA", "12.04.67", "13.05.67", "war cool!"));
+        Urlaub urlaub = new Urlaub(location,startDate,endDate,description,imgSrc);
+        UrlaubModelList.add(new Urlaub("USA", "12.04.67", "13.05.67", "war cool!", ""));
         UrlaubModelList.add(urlaub);
 
         loadUrlaubList(urlaub);
