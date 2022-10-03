@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.my_urlaub.room.UrlaubDatabaseHelper;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
     DrawerLayout drawerLayout;
     Button neuerUrlaub;
     ArrayList<Urlaub> UrlaubModelList = new ArrayList<Urlaub>();
+    private UrlaubDatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
         addVocation();
         setUpUrlaubModels();
         recyclerView();
-
     }
 
     public void recyclerView(){
@@ -59,9 +60,11 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
         String location = intent.getStringExtra("location");
         String description = intent.getStringExtra("description");
 
-        UrlaubModelList.add(new Urlaub(location,startDate,endDate,description));
+        Urlaub urlaub = new Urlaub(location,startDate,endDate,description);
         UrlaubModelList.add(new Urlaub("USA", "12.04.67", "13.05.67", "war cool!"));
+        UrlaubModelList.add(urlaub);
 
+        loadUrlaubList(urlaub);
         //for (int i = 0; i < urlaubDescription.length; i++) {
         //    UrlaubModelList.add(new Urlaub(urlaubLocation[i], urlaubDescription[i], urlaubStartDate[i], urlaubEndDate[i]));
         //}
@@ -78,16 +81,19 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
         });
     }
 
-    public void ClickMenu(View view){
-        openDrawer(drawerLayout);
+
+    private void loadUrlaubList(Urlaub urlaub) {
+        db = new UrlaubDatabaseHelper(MainActivity.this);
+        db.addUrlaub(urlaub);
+        db.getAllUrlaube();
+    }
+
+    public void ClickNewVocation(View view){
+        redirectActivity(this, NeuerUrlaub.class);
     }
 
     public static void openDrawer(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
-    }
-
-    public void ClickLogo(View view){
-        closeDrawer(drawerLayout);
     }
 
     public static void closeDrawer(DrawerLayout drawerLayout) {
@@ -96,8 +102,12 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
         }
     }
 
-    public void ClickNewVocation(View view){
-        redirectActivity(this, NeuerUrlaub.class);
+    public void ClickMenu(View view){
+        openDrawer(drawerLayout);
+    }
+
+    public void ClickLogo(View view){
+        closeDrawer(drawerLayout);
     }
 
     public void ClickFriends(View view){
@@ -153,14 +163,23 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
 
     @Override
     public void onItemClick(int position) {
-        Intent intent = new Intent(MainActivity.this, OnClickUrlaub.class );
-        //intent.putExtra(, );
-        startActivity(intent);
+        Intent intent = getIntent();
+        String startDate = intent.getStringExtra("startDate");
+        String endDate = intent.getStringExtra("endDate");
+        String location = intent.getStringExtra("location");
+        String description = intent.getStringExtra("description");
+
+        Intent intent1 = new Intent(MainActivity.this, OnClickUrlaub.class );
+        intent1.putExtra("startDate",startDate);
+        intent1.putExtra("endDate", endDate);
+        intent1.putExtra("location", location);
+        intent1.putExtra("description", description);
+
+        startActivity(intent1);
     }
 
     @Override
     public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
     }
 
     @Override
