@@ -91,6 +91,8 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
     private String dateEndFromInterface = "";
     private String descrFromInterface = "";
 
+    NotificationCompat.Builder notBuilder = new NotificationCompat.Builder(this);
+    private static final String CHANNEL_ID = UUID.randomUUID().toString();
 
 
     @Override
