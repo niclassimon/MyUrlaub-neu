@@ -1,4 +1,4 @@
-package com.example.my_urlaub.room;
+package com.example.my_urlaub;
 
 import androidx.room.TypeConverter;
 import java.util.UUID;

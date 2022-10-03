@@ -4,73 +4,110 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 
 import android.Manifest;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.time.Instant;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.PrimitiveIterator;
 
-public class NeuerUrlaub extends AppCompatActivity {
-    private TextView mDisplayDateStart;
+public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    public TextView mDisplayDateStart;
+    public int yearSt;
+    public int yearEd;
     public int monthSt;
+    public int daySt;
+    public int dayEd;
     public int monthEd;
-    private boolean BooleanOrt;
-    private boolean BooleanStart;
-    private boolean BooleanEnd;
-    private boolean BooleanDescription;
-    private boolean BooleanPicture;
-
+    public int UnixDateStartYear;
+    public int UnixDateStartMonth;
+    public int UnixDateStartDay;
+    public int UnixDateEndYear;
+    public int UnixDateEndMonth;
+    public int UnixDateEndDay;
+    public int UnixDateStart;
+    public int UnixDateEnd;
+    public boolean BooleanOrt;
+    public boolean BooleanStart;
+    public boolean BooleanEnd;
+    public boolean BooleanDescription;
+    public Spinner SpinnerNewUrlaub;
+    public Spinner SpinnerNewUrlaubMove;
     private ImageView imageView;
     private static final int PERMISSION_REQUEST = 0;
     private static final int RESULT_LOAD_IMAGE = 1;
     public Button SaveUrlaub;
-    private AlertDialog.Builder dialogBuilder;
+    public AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     private EditText DescriptionUrlaub;
-    private Button Save;
+    public Button Save;
     private EditText OrtEingabe;
     private TextView DescriptionNewUrlaub;
 
-    private TextView mDisplayDateEnd;
+    public TextView mDisplayDateEnd;
     private DatePickerDialog.OnDateSetListener mDateSetListenerStart;
     private DatePickerDialog.OnDateSetListener mDateSetListenerEnd;
     private String locFromInterface = "";
     private String dateStartFromInterface = "";
     private String dateEndFromInterface = "";
     private String descrFromInterface = "";
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_neuer_urlaub);
-        DateStart();
+        DateStartAndEnd();
         ShowImage();
         SaveAndCheckUrlaub();
         clickTextView();
+        SpinnerNewUrlaubColor();
+
 
 
     }
 
-    public void DateStart() {
+    public void DateStartAndEnd() {
         mDisplayDateStart = findViewById(R.id.DatumBeginnUrlaubEingabe);
         mDisplayDateStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +120,9 @@ public class NeuerUrlaub extends AppCompatActivity {
                         android.R.style.Theme_Material_Dialog,mDateSetListenerStart,yearStart,monthStart,dayStart);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
                 dialog.show();
-                monthSt = monthStart;
+
+
+
             }
         });
 
@@ -93,6 +132,9 @@ public class NeuerUrlaub extends AppCompatActivity {
                 monthStart = monthStart +1;
                 String dateStart = dayStart + "." +monthStart + "." + yearStart;
                 mDisplayDateStart.setText(dateStart);
+                yearSt = yearStart;
+                monthSt = monthStart;
+                daySt = dayStart;
 
             }
 
@@ -110,7 +152,7 @@ public class NeuerUrlaub extends AppCompatActivity {
                         android.R.style.Theme_Material_Dialog,mDateSetListenerEnd,year,month,day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
                 dialog.show();
-                monthEd = month;
+
 
 
             }
@@ -122,10 +164,19 @@ public class NeuerUrlaub extends AppCompatActivity {
                 month = month +1;
                 String date = day + "." +month + "." + year;
                 mDisplayDateEnd.setText(date);
+                yearEd = year;
+                monthEd = month;
+                dayEd = day;
 
             }
         };
+
+
+
     }
+
+
+
 
 
     public void ShowImage() {
@@ -177,6 +228,7 @@ public class NeuerUrlaub extends AppCompatActivity {
 
     }
 
+
     public void SaveAndCheckUrlaub(){
         SaveUrlaub = findViewById(R.id.SaveButton);
         OrtEingabe = findViewById(R.id.EditTextOrt);
@@ -184,11 +236,9 @@ public class NeuerUrlaub extends AppCompatActivity {
         SaveUrlaub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (monthSt == monthEd) {
-                    System.out.println(monthEd);
-                    System.out.println(monthSt);
-                    Toast.makeText(NeuerUrlaub.this, "Das Enddatum darf nicht vor dem Startdatum sein", Toast.LENGTH_SHORT).show();
-                }
+                createPDF();
+                UnixConverterStart();
+                UnixConverterEnd();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("startDate",getStartDate());
                 intent.putExtra("endDate", getEndDate());
@@ -196,27 +246,70 @@ public class NeuerUrlaub extends AppCompatActivity {
                 intent.putExtra("description", getDescription());
                 Log.d("hallo", getLocation());
                 startActivity(intent);
+                if(UnixDateStart > UnixDateEnd) {
+                    Toast.makeText(NeuerUrlaub.this, "Das Enddatum darf nicht vor dem Startdatum sein !", Toast.LENGTH_SHORT).show();
+                }
+                checkIfEverythingIsFilled();
+                System.out.println(BooleanDescription);
+                System.out.println(BooleanEnd);
+                System.out.println(BooleanOrt);
+                System.out.println(BooleanStart);
+                if ((BooleanDescription && BooleanEnd && BooleanOrt && BooleanStart) == false ) {
+
+                }else{
+
+                }
+
+
+
+
+
+
+
+
+
             }
         });
+    }
+
+    public void SpinnerNewUrlaubColor() {
+        SpinnerNewUrlaub = findViewById(R.id.SpinnerUrlaubColor);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Color_Array, android.R.layout.simple_list_item_activated_1);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_activated_1);
+
+        SpinnerNewUrlaub.setAdapter(adapter);
+        SpinnerNewUrlaub.setOnItemSelectedListener(this);
+   }
+
+  /*  private void SpinnerUrlaubMove() {
+        SpinnerNewUrlaubMove = findViewById(R.id.SpinnerUrlaubMove);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Move_Array, android.R.layout.simple_list_item_activated_2);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_activated_2);
+        SpinnerNewUrlaubMove.setAdapter(adapter);
+        SpinnerNewUrlaubMove.setOnItemSelectedListener(this);
+
 
     }
+
+*/
+
 
     public void checkIfEverythingIsFilled(){
         if(OrtEingabe.getText().toString() != "" ) {
             BooleanOrt = true;
-            System.out.println(BooleanOrt);
+
         }
         if (mDisplayDateStart.getText().toString() != "") {
             BooleanStart = true;
-            System.out.println(BooleanStart);
+
         }
         if (mDisplayDateEnd.getText().toString() != "") {
             BooleanEnd = true;
-            System.out.println(BooleanEnd);
+
         }
-        if (DescriptionNewUrlaub.getText().toString() != "") {
+        if (DescriptionNewUrlaub.getText().toString() != "Geben Sie eine Beschreibung für ihren Urlaub ein") {
             BooleanDescription = true;
-            System.out.println(BooleanDescription);
+
         }
 
     }
@@ -243,6 +336,23 @@ public class NeuerUrlaub extends AppCompatActivity {
         });
     }
 
+
+    public void UnixConverterStart() {
+        UnixDateStartYear = (yearSt - 1970) * 365 ;
+        UnixDateStartMonth = (monthSt -1)  * 30 ;
+        UnixDateStartDay = daySt - 1;
+        UnixDateStart = UnixDateStartYear + UnixDateStartMonth + UnixDateStartDay;
+    }
+    public void UnixConverterEnd() {
+        UnixDateEndYear = (yearEd - 1970) * 365 ;
+        UnixDateEndMonth = (monthEd -1)  * 30 ;
+        UnixDateEndDay = dayEd - 1;
+        UnixDateEnd = UnixDateEndYear + UnixDateEndMonth + UnixDateEndDay;
+
+
+    }
+
+
     public void clickTextView(){
         DescriptionNewUrlaub = findViewById(R.id.DesciptionNewUrlaubAnzeige);
         DescriptionNewUrlaub.setOnClickListener(new View.OnClickListener() {
@@ -254,9 +364,41 @@ public class NeuerUrlaub extends AppCompatActivity {
         });
     }
 
+    private void createPDF() {
+
+
+        PdfDocument myPDFCocument = new PdfDocument();
+        PdfDocument.PageInfo myPageInfo1 = new PdfDocument.PageInfo.Builder(1200,2010,1).create();
+        PdfDocument.Page myPage1 = myPDFCocument.startPage(myPageInfo1);
+        myPDFCocument.finishPage(myPage1);
+
+
+        File file = new File(Environment.getExternalStorageDirectory(),"/Hello.pdf");
+        try {
+            myPDFCocument.writeTo(new FileOutputStream(file));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        myPDFCocument.close();
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+
+
     public String getStartDate(){
         String startDate = mDisplayDateStart.getText().toString();
-     return startDate;
+        return startDate;
     }
 
     public String getEndDate(){
@@ -278,6 +420,9 @@ public class NeuerUrlaub extends AppCompatActivity {
         Urlaub urlaub = new Urlaub(getLocation(),getStartDate(), getEndDate(), getDescription());
         return urlaub;
     }
-
-
 }
+
+
+
+
+
