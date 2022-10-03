@@ -1,12 +1,9 @@
-package com.example.my_urlaub.room;
+package com.example.my_urlaub;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-
-
-import com.example.my_urlaub.Urlaub;
 
 import java.util.List;
 
