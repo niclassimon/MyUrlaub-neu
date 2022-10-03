@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
+import androidx.core.app.NotificationCompat;
 
 import android.Manifest;
 
@@ -19,6 +19,8 @@ import java.text.SimpleDateFormat;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -251,7 +253,7 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
                 intent.putExtra("endDate", getEndDate());
                 intent.putExtra("location", getLocation());
                 intent.putExtra("description", getDescription());
-                intent.putExtra("imgSrc", getImgSrc());
+                intent.putExtra("imgSrc", getImgSource());
                 startActivity(intent);
                 if(UnixDateStart > UnixDateEnd) {
                     Toast.makeText(NeuerUrlaub.this, "Das Enddatum darf nicht vor dem Startdatum sein !", Toast.LENGTH_SHORT).show();
