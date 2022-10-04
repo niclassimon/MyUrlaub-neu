@@ -29,7 +29,6 @@ import java.util.Date;
 public class Kalender extends AppCompatActivity implements CalendarAdapter.OnItemListener {
 
     DrawerLayout drawerLayout;
-    Button neuerUrlaub;
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private LocalDate selectedDate;
@@ -105,32 +104,6 @@ public class Kalender extends AppCompatActivity implements CalendarAdapter.OnIte
         monthYearText = findViewById(R.id.monthYearTV);
 
     }
-
-  /*  private void addVocation() {
-        neuerUrlaub = findViewById(R.id.neuerUrlaub2);
-        neuerUrlaub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Kalender.this, NeuerUrlaub.class);
-                startActivity(intent);
-            }
-        });
-    }*/
-
-
-
-
-
-    public void ClickNewVocation(View view){
-        MainActivity.redirectActivity(this, NeuerUrlaub.class);
-    }
-
-
-    public void ClickLogout(View view){
-        MainActivity.logout(this);
-    }
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override

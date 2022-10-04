@@ -20,6 +20,7 @@ public class OnClickUrlaub extends AppCompatActivity {
         setUpUI();
     }
 
+    //Hier werden alle benötigten Views (um einen Urlaub vollständig anzeigen zu können) inizialisiert und mit den dazugehörigen Werten besetzt
     public void setUpUI(){
         Intent intent = getIntent();
 
@@ -37,7 +38,5 @@ public class OnClickUrlaub extends AppCompatActivity {
         EndDate.setText(endDate);
         Location.setText(location);
         Description.setText(desciption);
-
-
     }
 }

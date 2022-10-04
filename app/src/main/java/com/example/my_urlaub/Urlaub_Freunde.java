@@ -12,14 +12,12 @@ import com.google.android.material.navigation.NavigationView;
 
 public class Urlaub_Freunde extends AppCompatActivity {
 
-    DrawerLayout drawerLayout;
     Button neuerUrlaub;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_urlaub_freunde);
-
 
         addVocation();
     }

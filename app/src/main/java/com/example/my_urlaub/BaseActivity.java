@@ -7,15 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -30,7 +27,6 @@ public class BaseActivity extends AppCompatActivity implements DrawerLayout.Draw
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initBurgerMenu();
-
     }
 
     protected void initBurgerMenu() {
@@ -45,6 +41,7 @@ public class BaseActivity extends AppCompatActivity implements DrawerLayout.Draw
         setSupportActionBar(toolbar);
     }
 
+    //Hier wird der Drawer inizialisiert
     private void initDrawer() {
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -52,6 +49,7 @@ public class BaseActivity extends AppCompatActivity implements DrawerLayout.Draw
         drawerLayout.addDrawerListener(this);
     }
 
+    //Hier wird geschaut ob der Drawer offen oder geschlossen ist
     private void initToggle() {
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer);
         drawerToggle.setDrawerIndicatorEnabled(true);
@@ -80,6 +78,9 @@ public class BaseActivity extends AppCompatActivity implements DrawerLayout.Draw
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        //Switch-Case für das Menu um zu den verschiedenen Activitys wechseln zu können
+
         String classname = this.getClass().getSimpleName();
 
         switch (item.getItemId()) {
@@ -107,12 +108,10 @@ public class BaseActivity extends AppCompatActivity implements DrawerLayout.Draw
             default:
                 return false;
         }
-
         return false;
-
-
     }
 
+    //Funktion zum Verlassen der App
     public static void logout(Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder((activity));
 
@@ -136,8 +135,8 @@ public class BaseActivity extends AppCompatActivity implements DrawerLayout.Draw
         builder.show();
     }
 
-
-
+    //Parts of this code were taken directly from <https://github.com/RandomIntStudios/FinanceHelperV2/blob/dev/app/src/main/java/com/ristudios/financehelperv2/ui/activities/BaseActivity.java>
+    // and adjusted to fit this project, credit goes to RandomIntStudios
     private void launchActivity(String classname, Class activity, boolean backToMain) {
         if (!classname.equals(activity.getSimpleName())) {
             if (!backToMain) {

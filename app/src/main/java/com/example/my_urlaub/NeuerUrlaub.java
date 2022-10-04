@@ -155,7 +155,6 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
                 yearSt = yearStart;
                 monthSt = monthStart;
                 daySt = dayStart;
-
             }
 
         };
@@ -296,8 +295,6 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
     }
 
 */
-
-
     public void checkIfEverythingIsFilled(){
         if(OrtEingabe.getText().toString() != "" ) {
             BooleanOrt = true;
@@ -315,9 +312,7 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
             BooleanDescription = true;
 
         }
-
     }
-
 
     public void openPopUpWindow(){
 
@@ -325,7 +320,6 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
         final View PopupView = getLayoutInflater().inflate(R.layout.popup_new_urlaub, null);
         DescriptionUrlaub = PopupView.findViewById(R.id.EingabeDescriptionPopUp);
         Save = (Button) PopupView.findViewById(R.id.ButtonPopUpHinzufügen);
-
 
         dialogBuilder.setView(PopupView);
         dialog = dialogBuilder.create();
@@ -367,13 +361,10 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
     }
 
     private void createPDF() {
-
-
         PdfDocument myPDFCocument = new PdfDocument();
         PdfDocument.PageInfo myPageInfo1 = new PdfDocument.PageInfo.Builder(1200,2010,1).create();
         PdfDocument.Page myPage1 = myPDFCocument.startPage(myPageInfo1);
         myPDFCocument.finishPage(myPage1);
-
 
         File file = new File(Environment.getExternalStorageDirectory(),"/Hello.pdf");
         try {
@@ -385,7 +376,6 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
         myPDFCocument.close();
     }
 
-
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -395,7 +385,6 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-
 
     public String getStartDate(){
         String startDate = mDisplayDateStart.getText().toString();
@@ -420,10 +409,6 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
     public String getImgSource(){
         String imgSource = imageView.toString();
         return imgSource;
-    }
-
-    public Urlaub newUrlaub(){
-        return new Urlaub(getLocation(),getStartDate(), getEndDate(), getDescription(), getImgSource());
     }
 }
 

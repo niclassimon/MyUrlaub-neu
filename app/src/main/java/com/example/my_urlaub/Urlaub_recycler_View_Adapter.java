@@ -35,6 +35,7 @@ public class Urlaub_recycler_View_Adapter extends RecyclerView.Adapter<Urlaub_re
         return new Urlaub_recycler_View_Adapter.MyViewHolder(view, recycler_view_interface);
     }
 
+    //Hier werden dem ViewHolder die passenden Werte für den jeweiligen TextView übergeben
     @Override
     public void onBindViewHolder(@NonNull Urlaub_recycler_View_Adapter.MyViewHolder holder, int position) {
         holder.location.setText(urlaubModels.get(position).getLocation());
@@ -50,7 +51,6 @@ public class Urlaub_recycler_View_Adapter extends RecyclerView.Adapter<Urlaub_re
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView location, description, date;
-
 
         public MyViewHolder(@NonNull View itemView, Recycler_view_Interface recycler_view_interface) {
             super(itemView);

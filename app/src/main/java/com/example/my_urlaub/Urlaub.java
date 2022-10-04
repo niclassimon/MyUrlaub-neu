@@ -64,11 +64,9 @@ public class Urlaub {
         else {this.imgSource = "";}
     }
 
-
     public String getLocation() {
         return location;
     }
-
 
     public String getStartDate() {
         return dateStart;
