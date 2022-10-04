@@ -21,25 +21,26 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.my_urlaub.UrlaubDatabaseHelper;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements Recycler_view_Interface, DrawerLayout.DrawerListener, NavigationView.OnNavigationItemSelectedListener{
-
+public class MainActivity extends BaseActivity implements Recycler_view_Interface{
+    //die will ich vorbereiten
     DrawerLayout drawerLayout;
     ActivityResultLauncher<Intent> activityResultLauncher;
     Button neuerUrlaub;
     ArrayList<Urlaub> UrlaubModelList = new ArrayList<Urlaub>();
     private UrlaubDatabaseHelper db;
-    CardView cardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState);
+
         drawerLayout = findViewById(R.id.drawer_layout);
 
         addVocation();
@@ -114,37 +115,6 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
 
     }
 
-    public static void openDrawer(DrawerLayout drawerLayout) {
-        drawerLayout.openDrawer(GravityCompat.START);
-    }
-
-    public static void closeDrawer(DrawerLayout drawerLayout) {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-    }
-
-    public void ClickMenu(View view){
-        openDrawer(drawerLayout);
-    }
-
-    public void ClickLogo(View view){
-        closeDrawer(drawerLayout);
-    }
-
-    public void ClickFriends(View view){
-        //redirectActivity(this, Urlaub_Freunde.class);
-        Intent intent = new Intent(MainActivity.this, Urlaub_Freunde.class);
-        startActivity(intent);
-    }
-
-    public void ClickCalender(View view){
-        redirectActivity(MainActivity.this, Kalender.class);
-    }
-
-    public void ClickLogout(View view){
-        logout(this);
-    }
 
     public static void logout(Activity activity) {
         AlertDialog.Builder builder = new AlertDialog.Builder((activity));
@@ -177,11 +147,6 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
         activity.startActivity(intent);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        closeDrawer(drawerLayout);
-    }
 
     @Override
     public void onItemClick(int position) {
@@ -203,27 +168,4 @@ public class MainActivity extends AppCompatActivity implements Recycler_view_Int
         startActivity(intent1);
     }
 
-    @Override
-    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-    }
-
-    @Override
-    public void onDrawerOpened(@NonNull View drawerView) {
-        invalidateOptionsMenu();
-    }
-
-    @Override
-    public void onDrawerClosed(@NonNull View drawerView) {
-        invalidateOptionsMenu();
-    }
-
-    @Override
-    public void onDrawerStateChanged(int newState) {
-
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
-    }
 }

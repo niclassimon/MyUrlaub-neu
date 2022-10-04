@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
+
+    <item android:title="Navigation">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item android:id="@+id/nav_mainActivity"
+                    android:icon="@drawable/ic_home"
+                    android:title="Home"/>
+                <item android:id="@+id/nav_new_vocation"
+                    android:icon="@drawable/add"
+                    android:title="Neuer Urlaub"/>
+                <item android:id="@+id/nav_vocation_friends"
+                    android:icon="@drawable/ic_friends"
+                    android:title="Urlaub Freunde"/>
+                <item android:id="@+id/nav_calendar"
+                    android:icon="@drawable/ic_calender"
+                    android:title="Kalender"/>
+                <item android:id="@+id/nav_logout"
+                    android:icon="@drawable/ic_logout"
+                    android:title="Logout"/>
+            </group>
+        </menu>
+    </item>
+</menu>

@@ -37,11 +37,12 @@ public class Kalender extends AppCompatActivity implements CalendarAdapter.OnIte
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kalender);
+        super.onCreate(savedInstanceState);
+
         drawerLayout = findViewById(R.id.drawer_layout);
         initWidgets();
-        selectedDate = LocalDate.now();
+        //selectedDate = LocalDate.now();
         setMonthView();
     }
 
@@ -95,7 +96,7 @@ public class Kalender extends AppCompatActivity implements CalendarAdapter.OnIte
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void nextMonthAction(View view) {
-       selectedDate = selectedDate.plusMonths(1);
+        selectedDate = selectedDate.plusMonths(1);
         setMonthView();
     }
 
@@ -118,35 +119,18 @@ public class Kalender extends AppCompatActivity implements CalendarAdapter.OnIte
 
 
 
-    public void ClickMenu(View view){
-        MainActivity.openDrawer(drawerLayout);
-    }
 
-    public void ClickLogo(View view){
-        MainActivity.closeDrawer(drawerLayout);
-    }
 
     public void ClickNewVocation(View view){
         MainActivity.redirectActivity(this, NeuerUrlaub.class);
     }
 
-    public void ClickFriends(View view){
-        MainActivity.redirectActivity(this, Urlaub_Freunde.class);
-    }
-
-    public void ClickCalender(View view){
-        recreate();
-    }
 
     public void ClickLogout(View view){
         MainActivity.logout(this);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MainActivity.closeDrawer(drawerLayout);
-    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override

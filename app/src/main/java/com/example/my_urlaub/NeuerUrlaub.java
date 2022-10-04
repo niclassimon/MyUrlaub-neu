@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 
 
 import android.Manifest;
@@ -19,6 +20,8 @@ import java.text.SimpleDateFormat;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -49,6 +52,7 @@ import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.PrimitiveIterator;
+import java.util.UUID;
 
 public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     public TextView mDisplayDateStart;
@@ -106,14 +110,14 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
         SpinnerNewUrlaubColor();
         setUpNotifications();
     }
-    
+
     private void setUpNotifications() {
         createNotificationChannel();
-    //    notBuilder.setSmallIcon();
+        //    notBuilder.setSmallIcon();
         notBuilder.setContentTitle(getString(R.string.notif_title));
         notBuilder.setContentText(getString(R.string.notif_text));
     }
-    
+
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.channel_name);
@@ -246,13 +250,15 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
                 createPDF();
                 UnixConverterStart();
                 UnixConverterEnd();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent();
                 intent.putExtra("startDate",getStartDate());
                 intent.putExtra("endDate", getEndDate());
                 intent.putExtra("location", getLocation());
                 intent.putExtra("description", getDescription());
-                intent.putExtra("imgSrc", getImgSrc());
-                startActivity(intent);
+                intent.putExtra("imgSrc", getImgSource());
+                setResult(Activity.RESULT_OK, intent);
+                finish();
+
                 if(UnixDateStart > UnixDateEnd) {
                     Toast.makeText(NeuerUrlaub.this, "Das Enddatum darf nicht vor dem Startdatum sein !", Toast.LENGTH_SHORT).show();
                 }
@@ -277,7 +283,7 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
 
         SpinnerNewUrlaub.setAdapter(adapter);
         SpinnerNewUrlaub.setOnItemSelectedListener(this);
-   }
+    }
 
   /*  private void SpinnerUrlaubMove() {
         SpinnerNewUrlaubMove = findViewById(R.id.SpinnerUrlaubMove);
@@ -410,7 +416,7 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
         String description = DescriptionNewUrlaub.getText().toString();
         return description;
     }
-    
+
     public String getImgSource(){
         String imgSource = imageView.toString();
         return imgSource;

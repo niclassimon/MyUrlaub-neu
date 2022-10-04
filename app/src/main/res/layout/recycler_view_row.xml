@@ -13,7 +13,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:cardBackgroundColor="@color/lightOrange"
-        app:cardCornerRadius="30dp"
+        app:flow_lastVerticalStyle="packed"
+        app:cardCornerRadius="20dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,11 +50,11 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="194dp"
-                android:layout_height="41dp"
+                android:layout_width="197dp"
+                android:layout_height="43dp"
+                android:text="TextView"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />

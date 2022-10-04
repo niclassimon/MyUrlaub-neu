@@ -7,31 +7,9 @@
     <string name="channel_name">notificationChannel</string>
     <string name="channel_description">channel for notifications about an unfinished Urlaub</string>
 
-    <string-array name="location">
-        <item>Deutschland</item>
-        <item>Spanien</item>
-        <item> Frankreich</item>
-        <item>Australien</item>
-    </string-array>
+    <string name="open_drawer">open_drawer</string>
+    <string name="close_drawer">close_drawer</string>
 
-    <string-array name="startDate">
-        <item>13.05.2020</item>
-        <item>04.10.2022</item>
-        <item>10.02.2019</item>
-        <item>23.11.2021</item>
-    </string-array>
 
-    <string-array name="endDate">
-        <item>13.05.2020</item>
-        <item>04.10.2022</item>
-        <item>20.02.2019</item>
-        <item>23.11.2021</item>
-    </string-array>
-
-    <string-array name="description">
-        <item>Es war kalt.</item>
-        <item>Es war toll!</item>
-        <item>Es war sher warm!</item>
-        <item>Flug hatte Verspätung</item>
-    </string-array>
 </resources>
+

@@ -20,7 +20,7 @@ public class Urlaub_Freunde extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_urlaub_freunde);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
+
         addVocation();
     }
 
@@ -33,35 +33,5 @@ public class Urlaub_Freunde extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    public void ClickMenu(View view){
-        MainActivity.openDrawer(drawerLayout);
-    }
-
-    public void ClickLogo(View view){
-        MainActivity.closeDrawer(drawerLayout);
-    }
-
-    public void ClickNewVocation(View view){
-        MainActivity.redirectActivity(this, NeuerUrlaub.class);
-    }
-
-    public void ClickFriends(View view){
-        recreate();
-    }
-
-    public void ClickCalender(View view){
-        MainActivity.redirectActivity(this, Kalender.class);
-    }
-
-    public void ClickLogout(View view){
-        MainActivity.logout(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MainActivity.closeDrawer(drawerLayout);
     }
 }
