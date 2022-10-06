@@ -110,6 +110,7 @@
         app:layout_constraintVertical_bias="0.198" />
 
     <Spinner
+        android:entries="@array/Move_Array"
         android:id="@+id/SpinnerUrlaubMove"
         android:layout_width="115dp"
         android:layout_height="26dp"
