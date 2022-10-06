@@ -1,10 +1,15 @@
 package com.example.my_urlaub;
 
+import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import com.example.my_urlaub.R;
+
 import java.util.UUID;
 
 @Entity(tableName = "urlaub_table")
@@ -24,9 +29,12 @@ public class Urlaub {
     public String description;
     @ColumnInfo(name = "imgSource")
     public String imgSource;
+    @ColumnInfo(name = "move")
+    public String move;
+
 
     @Ignore
-    public Urlaub(String location, String dateStart, String dateEnd, String description, String imgSource){
+    public Urlaub(String location, String dateStart, String dateEnd, String description, String imgSource, String move){
         this.id = UUID.randomUUID();
         if (location != null){
             this.location = location;}
@@ -43,9 +51,12 @@ public class Urlaub {
         if (imgSource != null){
             this.imgSource = imgSource;}
         else {this.imgSource = "";}
+        if (move != ""){
+            this.move = move;}
+        else {this.move = "";}
     }
 
-    public Urlaub(@NonNull UUID id, String location, String dateStart, String dateEnd, String description, String imgSource){
+    public Urlaub(@NonNull UUID id, String location, String dateStart, String dateEnd, String description, String imgSource, String move){
         this.id = id;
         if (location != null){
             this.location = location;}
@@ -62,6 +73,9 @@ public class Urlaub {
         if (imgSource != null){
             this.imgSource = imgSource;}
         else {this.imgSource = "";}
+        if (move != ""){
+            this.move = move;}
+        else {this.move = "";}
     }
 
     public String getLocation() {
@@ -82,5 +96,25 @@ public class Urlaub {
 
     public String getImgSource() {
         return imgSource;
+    }
+
+    public String getmove(){return move;};
+
+    public int getMove(){
+        String move = getmove();
+        switch (move) {
+            case "Auto":
+                return R.drawable.ic_car;
+            case "Flugzeug":
+                return R.drawable.ic_airplane;
+            case "Schiff":
+                return R.drawable.ic_boat;
+            case "Zug":
+                return R.drawable.ic_train;
+            case "Bus":
+                return R.drawable.ic_bus;
+            default:
+                return R.drawable.add;
+        }
     }
 }

@@ -19,6 +19,7 @@ public class Urlaub_recycler_View_Adapter extends RecyclerView.Adapter<Urlaub_re
     Context context;
     ArrayList<Urlaub> urlaubModels;
 
+
     public Urlaub_recycler_View_Adapter(Context context, ArrayList<Urlaub> urlaubModels, Recycler_view_Interface recycler_view_interface){
         this.context = context;
         this.urlaubModels = urlaubModels;
@@ -40,8 +41,11 @@ public class Urlaub_recycler_View_Adapter extends RecyclerView.Adapter<Urlaub_re
     public void onBindViewHolder(@NonNull Urlaub_recycler_View_Adapter.MyViewHolder holder, int position) {
         holder.location.setText(urlaubModels.get(position).getLocation());
         holder.description.setText(urlaubModels.get(position).getDescription());
-        holder.date.setText(urlaubModels.get(position).getStartDate());
+        holder.startdate.setText(urlaubModels.get(position).getStartDate());
+        holder.enddate.setText(urlaubModels.get(position).getEndDate());
+        holder.moveItem.setImageResource(urlaubModels.get(position).getMove());
     }
+
 
     @Override
     public int getItemCount() {
@@ -50,14 +54,19 @@ public class Urlaub_recycler_View_Adapter extends RecyclerView.Adapter<Urlaub_re
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView location, description, date;
+        TextView location, description, startdate, enddate;
+        ImageView moveItem;
 
         public MyViewHolder(@NonNull View itemView, Recycler_view_Interface recycler_view_interface) {
             super(itemView);
 
-            location = itemView.findViewById(R.id.textView);
-            description = itemView.findViewById(R.id.textView2);
-            date = itemView.findViewById(R.id.textView3);
+            location = itemView.findViewById(R.id.description_view);
+            description = itemView.findViewById(R.id.description_view);
+            startdate = itemView.findViewById(R.id.startdate_view);
+            enddate = itemView.findViewById(R.id.endDate_view);
+            moveItem = itemView.findViewById(R.id.move_view);
+
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -69,6 +78,20 @@ public class Urlaub_recycler_View_Adapter extends RecyclerView.Adapter<Urlaub_re
                             recycler_view_interface.onItemClick(pos);
                         }
                     }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if(recycler_view_interface != null){
+                        int pos = getAdapterPosition();
+
+                        if(pos != RecyclerView.NO_POSITION){
+                            recycler_view_interface.onItemLongClick(pos);
+                        }
+                    }
+                    return true;
                 }
             });
         }

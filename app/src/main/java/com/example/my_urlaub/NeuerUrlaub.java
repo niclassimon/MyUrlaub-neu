@@ -260,6 +260,7 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
                 intent.putExtra("location", getLocation());
                 intent.putExtra("description", getDescription());
                 intent.putExtra("imgSrc", getImgSource());
+                intent.putExtra("move", getmove());
                 setResult(Activity.RESULT_OK, intent);
                 finish();
 
@@ -289,10 +290,9 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
         SpinnerNewUrlaub.setOnItemSelectedListener(this);
     }
 
-     private void SpinnerUrlaubMove() {
+    private void SpinnerUrlaubMove() {
         SpinnerNewUrlaubMove = findViewById(R.id.SpinnerUrlaubMove);
         SpinnerNewUrlaubMove.setOnItemSelectedListener(this);
-
 
     }
 
@@ -412,8 +412,15 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
         String imgSource = imageView.toString();
         return imgSource;
     }
-}
 
+    public String getmove(){
+        SpinnerNewUrlaubMove = findViewById(R.id.SpinnerUrlaubMove);
+        SpinnerNewUrlaubMove.setOnItemSelectedListener(this);
+
+        String move = SpinnerNewUrlaubMove.getSelectedItem().toString();
+        return move;
+    }
+}
 
 
 

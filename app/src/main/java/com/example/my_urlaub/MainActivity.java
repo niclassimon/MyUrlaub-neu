@@ -34,6 +34,7 @@ public class MainActivity extends BaseActivity implements Recycler_view_Interfac
     Button neuerUrlaub;
     ArrayList<Urlaub> UrlaubModelList = new ArrayList<Urlaub>();
     private UrlaubDatabaseHelper db;
+    Urlaub_recycler_View_Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,8 @@ public class MainActivity extends BaseActivity implements Recycler_view_Interfac
                 String location = i.getStringExtra("location");
                 String description = i.getStringExtra("description");
                 String imgSrc = i.getStringExtra("imgSrc");
-                Urlaub urlaub = new Urlaub(location,startDate,endDate,description,imgSrc);
+                String moveItem = i.getStringExtra("move");
+                Urlaub urlaub = new Urlaub(location,startDate,endDate,description,imgSrc,moveItem);
                 UrlaubModelList.add(urlaub);
 
                 recyclerView();
@@ -70,7 +72,7 @@ public class MainActivity extends BaseActivity implements Recycler_view_Interfac
     public void recyclerView(){
         RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
         recyclerView.setHasFixedSize(false);
-        Urlaub_recycler_View_Adapter adapter = new Urlaub_recycler_View_Adapter(this, UrlaubModelList, this);
+        adapter = new Urlaub_recycler_View_Adapter(this, UrlaubModelList, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.notifyDataSetChanged();
@@ -109,6 +111,12 @@ public class MainActivity extends BaseActivity implements Recycler_view_Interfac
         intent.putExtra("description", description);
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemLongClick(int position) {
+        UrlaubModelList.remove(position);
+        adapter.notifyItemRemoved(position);
     }
 
 }
