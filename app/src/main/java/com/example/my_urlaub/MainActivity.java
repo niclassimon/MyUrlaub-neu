@@ -113,6 +113,7 @@ public class MainActivity extends BaseActivity implements Recycler_view_Interfac
         startActivity(intent);
     }
 
+    //Objekte werden aus der ArrayList gelöscht und der Adapter wird darüber informiert
     @Override
     public void onItemLongClick(int position) {
         UrlaubModelList.remove(position);
