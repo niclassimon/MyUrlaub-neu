@@ -102,12 +102,17 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BooleanDescription = false;
+        BooleanEnd = false;
+        BooleanStart = false;
+        BooleanOrt = false;
         setContentView(R.layout.activity_neuer_urlaub);
         DateStartAndEnd();
         ShowImage();
         SaveAndCheckUrlaub();
         clickTextView();
         SpinnerNewUrlaubColor();
+        SpinnerUrlaubMove();
         setUpNotifications();
     }
 
@@ -284,17 +289,14 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
         SpinnerNewUrlaub.setOnItemSelectedListener(this);
     }
 
-  /*  private void SpinnerUrlaubMove() {
+     private void SpinnerUrlaubMove() {
         SpinnerNewUrlaubMove = findViewById(R.id.SpinnerUrlaubMove);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Move_Array, android.R.layout.simple_list_item_activated_2);
-        adapter.setDropDownViewResource(android.R.layout.simple_list_item_activated_2);
-        SpinnerNewUrlaubMove.setAdapter(adapter);
         SpinnerNewUrlaubMove.setOnItemSelectedListener(this);
 
 
     }
 
-*/
+
     public void checkIfEverythingIsFilled(){
         if(OrtEingabe.getText().toString() != "" ) {
             BooleanOrt = true;
@@ -308,7 +310,7 @@ public class NeuerUrlaub extends AppCompatActivity implements AdapterView.OnItem
             BooleanEnd = true;
 
         }
-        if (DescriptionNewUrlaub.getText().toString() != "Geben Sie eine Beschreibung für ihren Urlaub ein") {
+        if (DescriptionNewUrlaub.getText().toString() != "") {
             BooleanDescription = true;
 
         }
